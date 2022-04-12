@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            var cal;
+        </script>
+        <link rel='stylesheet' href="calendar.css">    
+        <script src="JS/calendar.js"></script>
+        <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
+        <script src="JS/getDateFromLead.js"></script>
+
+    </head>
+    <body>
+        <div id="calendar"></div>
+        <script>
+            var ele = document.getElementById('calendar');
+            var opts = { abbrDay: true };            
+            if(cal === undefined){
+                cal = new calendar(ele, opts);
+            }
+        </script>
+    </body>
+</html>

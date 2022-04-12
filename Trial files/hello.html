@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Hello CRM</title>
+    <link rel='stylesheet' href="calendar.css">
+    <script src="JS/calendar.js"> </script>
+</head>
+
+<body>
+    <h1> Vanakam from widget...!! </h1>
+
+    <div id=calendar>
+        <script >            
+            var date = new Date("02/22/22");
+            var ele = document.getElementById('calendar');
+            var opts = { abbrDay: true, month: 2, year: 2022 };
+            var cal = new window.calendar(ele, opts);    
+            console.log("First script");
+            console.log(cal);
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0]);
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0].parentNode);
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0].parentNode.parentNode);
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0].parentNode.parentNode.parentNode);
+            
+            cal.selectDate(date)
+        </script>
+        <script>            
+            console.log("Second script");
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0]);
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0].parentNode);
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0].parentNode.parentNode);
+            console.log(cal.elem.getElementsByClassName("cjs-dayCell"+(new Date("02/22/22").getDate()))[0].parentNode.parentNode.parentNode);
+            cal.selectDate(date);
+
+        </script>
+    </div>
+</body>
+
+</html>

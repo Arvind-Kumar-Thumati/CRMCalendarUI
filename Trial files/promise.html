@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        var cal;
+    </script>
+    <link rel='stylesheet' href="calendar.css">    
+    <script src="JS/calendar.js"></script>
+    <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
+    <!-- <script src="JS/getDateFromLead.js"></script> -->
+
+    <script>
+        var id, entity='Leads', recordData, record, modified_date, modified_time, onPageLoadRes;
+        
+
+        async function getId(){
+            onPageLoadRes = await ZOHO.embeddedApp.on("PageLoad", function (data) {        
+                entity = data.Entity;                  
+                id = data.EntityId;                                
+                console.log("Inside promise id "+id+" entity "+entity);
+                console.log("Inside Promise "+isResolved);                
+            })               
+            console.log("onPageLoadRes "+onPageLoadRes);
+        }
+        
+
+        async function getData(){
+            await ZOHO.embeddedApp.init()
+                .then(console.log(id+" "+entity))
+                .then(console.log("Inside getRecord id "+id+" entity "+entity))
+                .then(function(){
+                    ZOHO.CRM.API.getRecord({
+                        Entity: entity,
+                        RecordID: id                    
+                    })               
+                    .then(function (recordData) {
+                        console.log(recordData)
+                        for (record of recordData.data) {                            
+                            if (record["id"] === id) {
+                                console.log(record);
+                                return record;
+                            }
+                        }                        
+                    })
+                    .then(function(record) {
+                        console.log("inside getModifiedDate");
+                        console.log(record)
+                        modified_time = new Date(record["Modified_Time"])                        
+                        modified_date = new Date( ""+(+modified_time.getMonth()+1) + "/"+ modified_time.getDate() + "/" + modified_time.getFullYear());                                                
+                        cal.month = modified_date.getMonth();
+                        cal.year = modified_date.getFullYear();
+                        cal.drawCalendar();                        
+                        console.log(modified_time);
+                        console.log(modified_date);                                                
+                        console.log("onPageLoadRes "+onPageLoadRes)
+                    })
+                    .then(cal.selectDate(modified_date));                
+                
+                });                
+                
+                    // await setTimeout(
+                    //     function(){
+                    //         console.log("inside getRecord");
+                    //         console.log("Inside getRecord id "+id+" entity "+entity);
+                    //         recordData = ZOHO.CRM.API.getRecord({
+                    //             Entity: entity,
+                    //             RecordID: id                    
+                    //         });
+                    //     }
+                    //     , 500);
+                    // };
+                        
+            // record = await function getRecordFromArray(recordData) {
+            //       console.log("inside getRecordFromArray");
+            //     for (record of recordData.data) {
+            //         //   console.log(record)
+            //         // console.log(record["id"])
+            //         if (record["id"] === id) {
+            //             console.log(record);
+            //             return record;
+            //         }
+            //     }
+            //     // console.log(recordData)
+            // }(recordData);
+                        
+            
+        }
+        getId().then(console.log("then onPageLoadRes "+onPageLoadRes)).then(getData());
+                
+    </script>    
+
+</head>
+
+<body>
+
+    <div id="calendar"></div>
+    <script>
+        var ele = document.getElementById('calendar');
+        var opts = { abbrDay: true };
+        var cal = new calendar(ele, opts);
+    </script>
+
+</body>
+
+</html>
